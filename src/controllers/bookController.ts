@@ -12,8 +12,48 @@ export let getBooks = (req: Request, res: Response) => {
     })
 };
 
-
 // - GET - /book/{1} # returns a book with id 1
-// - POST - /book # inserts a new book into the table
+export let getBook = (req: Request, res: Response) => {
+    Book.findById(req.params.id, (err: any, book: any) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(book);
+        }
+    })
+};
+
+// - PUT - /book # inserts a new book into the table
+export let addBook = (req: Request, res: Response) => {
+    let book = new Book(req.body);
+
+    book.save(((err: any) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(book);
+        }
+    }))
+};
+
 // - DELETE - /book/{1} # deletes a book with id of 1
-// - PUT - /book/{1} # updates a book with id of 1
+export let deleteBook = (req: Request, res: Response) => {
+    Book.deleteOne({ _id: req.body.id }, (err: any) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send('Deleted Successfully')
+        }
+    })
+};
+
+// - POST - /book/{1} # updates a book with id of 1
+export let updateBook = (req: Request, res: Response) => {
+    Book.findByIdAndUpdate(req.params.id, req.body, (err: any, book: any) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send('Updated Successfully');
+        }
+    })
+};
