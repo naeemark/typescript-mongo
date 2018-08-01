@@ -3,7 +3,7 @@ import Book from './../book';
 
 // - GET - /books # returns all books
 export let getBooks = (req: Request, res: Response) => {
-    let books = Book.find((err: any, books: any) => {
+    Book.find((err: any, books: any) => {
         if (err) {
             res.send(err);
         } else {
